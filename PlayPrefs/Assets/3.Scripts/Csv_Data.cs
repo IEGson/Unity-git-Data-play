@@ -13,7 +13,7 @@ public class Csv_Data : MonoBehaviour
     public bool m_IsColumnHeading, m_IsStopWrite;
     private List<string[]> m_WriteRowData = new List<string[]>();
 
-    public string m_Path = Application.dataPath + "/Resources/";
+    public string m_Path = Application.streamingAssetsPath;
     public string m_FilePrefix = "Mouse";
     private string m_FilePath;
     private bool m_IsWriting;

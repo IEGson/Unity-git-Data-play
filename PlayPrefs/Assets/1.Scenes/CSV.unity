@@ -1080,7 +1080,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1141944262}
+      - m_Target: {fileID: 0}
         m_MethodName: loadfunc
         m_Mode: 1
         m_Arguments:
@@ -1763,17 +1763,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1141944261}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2db443ad585894c448ee7abfeafafd06, type: 3}
+  m_Script: {fileID: 11500000, guid: bc412745662611348ad10bf3034dba66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item_Date:
-  - {fileID: 1131809609}
-  - {fileID: 1794398175}
-  - {fileID: 557962304}
-  Scroll_item_Date:
-  - {fileID: 1732325888}
-  - {fileID: 1106868458}
-  - {fileID: 957834185}
+  m_ColumnHeadings:
+  - "\uC2DC\uAC04"
+  - "\uB9C8\uC6B0\uC2A4 X"
+  - "\uB9C8\uC6B0\uC2A4 Y"
+  m_IsColumnHeading: 0
+  m_IsStopWrite: 0
+  m_Path: 
+  m_FilePrefix: 
 --- !u!114 &1141944263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2945,7 +2945,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1141944262}
+      - m_Target: {fileID: 0}
         m_MethodName: savefunc
         m_Mode: 1
         m_Arguments:
