@@ -8,11 +8,9 @@ using UnityEngine.UI;
 public class Xml : MonoBehaviour
 {
     public Text[] TEST_TEXT = new Text[3];
+    public InputField[] InputField_TEXT = new InputField[3];
+
     // Start is called before the first frame update
-    void Start()
-    {
-      
-    }
     public void CreateXml() // xml 파일 생성 
     {
         XmlDocument xmlDoc = new XmlDocument();
@@ -41,13 +39,10 @@ public class Xml : MonoBehaviour
         exp.InnerText = "45";
         child.AppendChild(exp);
         xmlDoc.Save(Application.persistentDataPath + @"Character.xml");
-
-        //xmlDoc.Save("./Assets/Resources/Character.xml");
-    }
+   }
     public void LoadXml() // 데이터 저장하기 
     {
         TextAsset textAsset = (TextAsset)Resources.Load("Character");
-        Debug.Log(textAsset);
         XmlDocument xmlDoc = new XmlDocument();
         xmlDoc.LoadXml(textAsset.text);
 
@@ -58,10 +53,6 @@ public class Xml : MonoBehaviour
             TEST_TEXT[0].text = node.SelectSingleNode("Name").InnerText;
             TEST_TEXT[1].text = node.SelectSingleNode("Level").InnerText;
             TEST_TEXT[2].text = node.SelectSingleNode("Experience").InnerText;
-
-            //Debug.Log("Name :: " + node.SelectSingleNode("Name").InnerText);
-            //Debug.Log("Level :: " + node.SelectSingleNode("Level").InnerText);
-            //Debug.Log("Exp :: " + node.SelectSingleNode("Experience").InnerText);
         }
     }
     public void SaveOverlapXml() // 저장된 데이터 덮어 씌우기 
@@ -72,12 +63,14 @@ public class Xml : MonoBehaviour
 
         XmlNodeList nodes = xmlDoc.SelectNodes("CharacterInfo/Character");
         XmlNode character = nodes[0];
-
-        character.SelectSingleNode("Name").InnerText = "wergia";
-        character.SelectSingleNode("Level").InnerText = "4";
-        character.SelectSingleNode("Experience").InnerText = "120";
-
+        if (InputField_TEXT[0].text != null && InputField_TEXT[1].text != null && InputField_TEXT[2].text != null)
+        {
+            character.SelectSingleNode("Name").InnerText = InputField_TEXT[0].text;
+            character.SelectSingleNode("Level").InnerText = InputField_TEXT[1].text;
+            character.SelectSingleNode("Experience").InnerText = InputField_TEXT[2].text;
+        }
         xmlDoc.Save("./Assets/Resources/Character.xml");
+
     }
 
     // Update is called once per frame
@@ -86,14 +79,6 @@ public class Xml : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F9)) // xml파일  생성
         {
             CreateXml();
-        }
-        if (Input.GetKeyDown(KeyCode.F10)) // xml 파일 읽기
-        {
-            LoadXml();
-        }
-        if (Input.GetKeyDown(KeyCode.F11)) 
-        {
-            SaveOverlapXml();
         }
     }
 }

@@ -9,15 +9,20 @@ public class PlayPrefs_data : MonoBehaviour
     InputField input; // string
     [SerializeField]
      Slider silde; // float
+    public Text input_text, silde_text;
+    //PlayerPrefs 저장 경로
+    // 레지스트리 편집기 -> HKEY_CURRENT_USER\SOFTWARE\Unity\회사이름\프로젝트명
+
+    //데이터저장
     public void Save()
     {
         PlayerPrefs.SetString("StringA", input.text);
         PlayerPrefs.SetFloat("SilderA", silde.value);
     }
-    // Start is called before the first frame update
+    //데이터 불러오기
     public void Load()
     {
-        input.text = PlayerPrefs.GetString("StringA");
-        silde.value = PlayerPrefs.GetFloat("SilderA");
+        input_text.text = PlayerPrefs.GetString("StringA");
+        silde_text.text = PlayerPrefs.GetFloat("SilderA").ToString();
     }
 }
