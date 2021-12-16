@@ -17,9 +17,5 @@ public class scriptableobject : ScriptableObject
     private int Dis;
     public int DIS { get { return Dis; } }
 
-    //public void Print()
-    //{
-    //    Debug.Log(ID + ": " + Name + "방향: " + Dis);
-    //}
     
 }

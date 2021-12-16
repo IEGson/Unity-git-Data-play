@@ -6,71 +6,87 @@ using System.Text;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Csv_Data : MonoBehaviour
 {
-    public string[] m_ColumnHeadings = { "시간", "마우스 X", "마우스 Y" };
+    //저장 데이터 형태
+    public string[] m_ColumnHeadings = { "Name", "Level", "Hp" };
     public bool m_IsColumnHeading, m_IsStopWrite;
     private List<string[]> m_WriteRowData = new List<string[]>();
-
+    //저장 위치
     public string m_Path = Application.streamingAssetsPath;
     public string m_FilePrefix = "Mouse";
     private string m_FilePath;
     private bool m_IsWriting;
-
-    void Update()
+    //데이터 표현
+    public Text[] Scroll_item_Date = new Text[3];
+    public InputField[] item_Date = new InputField[3];
+    //CSV 데이터 저장하는 함수
+    void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.W) && !m_IsWriting)
+        m_FilePath = m_Path + @"\" + m_FilePrefix + ".csv";
+    }
+    public void LoadDate()
+    {
+        //데이터 저장 위치 
+        string[,] readDatas = ReadCsv(m_FilePath);
+        //readDatas 이차 행렬의 길이는 GetLength(0) -> 1차원 길이,GetLength(1) -> 2차원 길이
+        for (int i = 0; i < readDatas.GetLength(1); i++)
         {
+            Scroll_item_Date[0].text += "\n" + readDatas[0, i];
+            Scroll_item_Date[1].text += "\n" + readDatas[1, i];
+            Scroll_item_Date[2].text += "\n" + readDatas[2, i];
+        }
+    }
+    public void datesave()
+    {
+        //쓰는 상태 체크
+        if (!m_IsWriting)
+        {
+            //컬럼 헤드를 사용할때
             if (m_IsColumnHeading)
             {
                 m_WriteRowData.Add(m_ColumnHeadings);
+
             }
-
-            StartCoroutine(CMakeRowBodys(m_ColumnHeadings.Length));
             m_IsWriting = true;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
             m_IsStopWrite = true;
+            StartCoroutine(CMakeRowBodys(m_ColumnHeadings.Length));
         }
-
-        if (Input.GetKeyDown(KeyCode.R))
+        else
         {
-            string[,] readDatas = ReadCsv(m_FilePath);
-            Debug.Log(readDatas[1, 1]);
+            //쓰는중
+            //Debug.Log("csv 쓰는중");
         }
-    }
 
+    }
     // Write Csv 
     IEnumerator CMakeRowBodys(int nRows)
     {
         int interval = 1;
-
-        float seconds = 0;
-
         while (true)
         {
+            //데이터 저장하는 부분
             string[] rowDataTemp = new string[nRows];
-
-            seconds += interval;
-            float mouseX = Input.mousePosition.x;
-            float mouseY = Input.mousePosition.y;
-
-            rowDataTemp[0] = seconds.ToString();
-            rowDataTemp[1] = mouseX.ToString();
-            rowDataTemp[2] = mouseY.ToString();
-
-            CsvAddRow(rowDataTemp, m_WriteRowData);
+            if (item_Date[0].text != null && item_Date[1].text != null && item_Date[2].text != null)
+            {
+                rowDataTemp[0] = item_Date[0].text.ToString();
+                rowDataTemp[1] = item_Date[1].text.ToString();
+                rowDataTemp[2] = item_Date[2].text.ToString();
+            }
+            else
+            {
+                rowDataTemp[0] = "NULL";
+                rowDataTemp[1] = "NULL";
+                rowDataTemp[2] = "NULL";
+            }
+            //행렬 데이터를 m_WriteRowData로 바뀌어주는 함수
+            CsvAddRow(rowDataTemp, m_WriteRowData);      
 
             if (m_IsStopWrite)
-            {
-                m_FilePath
-                    = m_Path + @"\" + m_FilePrefix +
-                    DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
-
+            {    
                 WriteCsv(m_WriteRowData, m_FilePath);
+                Debug.Log(m_WriteRowData.ToString());
                 m_WriteRowData.Clear();
                 break;
             }
@@ -83,7 +99,9 @@ public class Csv_Data : MonoBehaviour
     {
         string[] rowDataTemp = new string[rows.Length];
         for (int i = 0; i < rows.Length; i++)
+        {
             rowDataTemp[i] = rows[i];
+        }            
         rowData.Add(rowDataTemp);
     }
 
@@ -103,12 +121,13 @@ public class Csv_Data : MonoBehaviour
 
         for (int index = 0; index < length; index++)
             stringBuilder.AppendLine(string.Join(delimiter, output[index]));
-
-        Stream fileStream = new FileStream(filePath, FileMode.CreateNew, FileAccess.Write);
+        //FileMode.CreateNew -> 파일을 새로 생성할때 사용
+        //Stream fileStream = new FileStream(filePath, FileMode.CreateNew, FileAccess.Write);
+        //파일을 열어서 덮어쓰기 위해서 아래처럼 사용
+        Stream fileStream = new FileStream(filePath, FileMode.Open , FileAccess.Write);
         StreamWriter outStream = new StreamWriter(fileStream, Encoding.UTF8);
         outStream.WriteLine(stringBuilder);
         outStream.Close();
-
         m_IsWriting = false;
     }
 
@@ -142,7 +161,7 @@ public class Csv_Data : MonoBehaviour
 
         return outputGrid;
     }
-
+    //CSV 행분할
     public string[] SplitCsvLine(string line)
     {
         return (from Match m in System.Text.RegularExpressions.Regex.Matches(line,
