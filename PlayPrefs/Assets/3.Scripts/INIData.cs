@@ -7,9 +7,11 @@ using System.IO;
 using UnityEngine.UI;
 public class INIData : MonoBehaviour
 {
+    //데이터 쓰기 위한 부분 DllImport을 이용하여 ini  파일 쓰기
     [DllImport("kernel32", CharSet = CharSet.Unicode)]
     static extern long WritePrivateProfileString(
          string Section, string Key, string Value, string FilePath);
+    //데이터 읽기 위한 부분 DllImport을 이용하여 ini  파일 쓰기
     [DllImport("kernel32", CharSet = CharSet.Unicode)]
     static extern int GetPrivateProfileString(
         string Section, string Key, string Default, StringBuilder RetVal, int Size, string FilePath);
@@ -29,7 +31,7 @@ public class INIData : MonoBehaviour
     [Header("DATE")]
     public InputField[] item_Date = new InputField[4];
     public Text[] Scroll_item_Date = new Text[4];
-
+    //데이터 쓰는함수
     public void WriteDate()
     {
         string filePath = Path.Combine(Application.streamingAssetsPath, "/config.ini");
@@ -41,6 +43,7 @@ public class INIData : MonoBehaviour
             WriteIni(filePath, "Section", "StringData", item_Date[3].text.ToString());
         }
     }
+    //데이터 읽는 함수
     public void ReadDate()
     {
         string filePath = Path.Combine(Application.streamingAssetsPath, "/config.ini");

@@ -7,18 +7,13 @@ public class TXT_DATA : MonoBehaviour
 {
     public InputField[] item_Date = new InputField[3];
     public Text[] Scroll_item_Date = new Text[3];
-    void Awake()
-    {
-        string filePath = Path.Combine(Application.streamingAssetsPath, "Example.txt");
-        WriteTxt(filePath, "");
-        Debug.Log(ReadTxt(filePath));
-    }
+
     public void SaveDate()
     {
         string filePath = Path.Combine(Application.streamingAssetsPath, "Example.txt");
         if (item_Date[0].text != null && item_Date[1].text != null && item_Date[2].text != null)
         {
-            string message =  item_Date[0].text.ToString() + "," + item_Date[1].text.ToString() + "," + item_Date[2].text.ToString();
+            string message = item_Date[0].text.ToString() + "," + item_Date[1].text.ToString() + "," + item_Date[2].text.ToString() + ",";
             WriteTxt(filePath, message);
         }
     }

@@ -2,10 +2,10 @@
 using System.Collections.Generic; //list 사용하기 위해 선언 
 using UnityEngine;
 using UnityEngine.UI;
-using LitJson; // json 사용하기위해 선언 
+using LitJson; // json 사용하기위해 선언 LitJson.dll파일이 있어야합니다.
 using System.IO; // json 파일을 열고 닫기 위해서 선언 
 
-public class Item<T> //아이템
+public class Item<T> //제너릭 사용
 {
     public T ID;        //id
     public T Name;  // 이름

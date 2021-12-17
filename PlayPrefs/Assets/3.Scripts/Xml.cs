@@ -30,11 +30,11 @@ public class Xml : MonoBehaviour
         XmlElement name = xmlDoc.CreateElement("Name");
         name.InnerText = "hi";
         child.AppendChild(name);
-
+        // 자식 노드에 들어갈 속성 생성
         XmlElement lv = xmlDoc.CreateElement("Level");
         lv.InnerText = "1";
         child.AppendChild(lv);
-
+        // 자식 노드에 들어갈 속성 생성
         XmlElement exp = xmlDoc.CreateElement("Experience");
         exp.InnerText = "45";
         child.AppendChild(exp);
