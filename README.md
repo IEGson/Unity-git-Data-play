@@ -14,3 +14,6 @@
 7.Txt씬에서는 Asstes/StreamingAssets폴터안에 Example.txt 파일을 불러오기, 저장하기 방법
 
 8.xml 씬에서는 Asstes/Resources폴터안에 Character.xml 파일을 불러오기, 저장하기 방법
+
+
+유튜브 링크 : https://www.youtube.com/channel/UCiXXxLOyuK9y6MIDypbmU3A/videos
